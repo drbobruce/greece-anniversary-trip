@@ -38,6 +38,8 @@ export interface BookedActivity {
   notes?: string;
   mapsUrl?: string;
   websiteUrl?: string;
+  /** Defaults to "confirmed" when omitted — set "pending" for anything still TBD. */
+  status?: "confirmed" | "pending";
 }
 
 export interface Hotel {
@@ -48,7 +50,9 @@ export interface Hotel {
   checkIn: string; // ISO date, YYYY-MM-DD
   checkOut: string; // ISO date, YYYY-MM-DD
   address?: string;
+  roomType?: string;
   confirmationNumber?: string;
+  totalCost?: string;
   description?: string;
   notes?: string;
   mapsUrl?: string;

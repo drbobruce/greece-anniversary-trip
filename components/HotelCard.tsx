@@ -27,10 +27,18 @@ export function HotelCard({ hotel }: { hotel: Hotel }) {
           <p className="mt-2 text-sm text-ink-soft">{hotel.address}</p>
         )}
 
+        {hotel.roomType && (
+          <p className="mt-2 text-sm text-ink-soft">Room: {hotel.roomType}</p>
+        )}
+
         {hotel.confirmationNumber && (
           <p className="mt-2 text-sm text-ink-soft">
             Confirmation: {hotel.confirmationNumber}
           </p>
+        )}
+
+        {hotel.totalCost && (
+          <p className="mt-2 text-sm text-ink-soft">Total: {hotel.totalCost}</p>
         )}
 
         {hotel.notes && (

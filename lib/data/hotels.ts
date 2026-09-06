@@ -23,6 +23,9 @@ export const hotels: Hotel[] = [
     area: "Imerovigli, Santorini",
     checkIn: "2026-09-13",
     checkOut: "2026-09-14",
+    roomType: "Junior Suite Pool Front",
+    confirmationNumber: "436-7110689",
+    totalCost: "$326.96",
     description:
       "A one-night caldera-view stay in Imerovigli, the quiet clifftop village between Fira and Oia.",
     notes: "Short stay before moving to Oia — pack a light bag for the transfer.",
@@ -42,14 +45,15 @@ export const hotels: Hotel[] = [
   },
   {
     slug: "domes-zeen-chania",
-    name: "Domes Zeen Chania",
+    name: "Domes Zeen Chania, Luxury Collection Resort",
     region: "crete",
     area: "Chania, Crete",
     checkIn: "2026-09-17",
     checkOut: "2026-09-19",
     description:
       "The final stop of the trip, on the coast near Chania on Crete's northwest shore.",
-    notes: "Add confirmation number and return-flight details once booked.",
+    notes:
+      "Add confirmation number once booked. Note: the currently booked return flight departs from Heraklion (HER), not Chania — see the Sep 19 return plan, which is change pending.",
     mapsUrl: mapsSearchUrl("Domes Zeen Chania Crete"),
   },
 ];

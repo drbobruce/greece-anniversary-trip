@@ -85,11 +85,18 @@ export function DayDetail({ day }: { day: TripDay }) {
                   <p className="font-serif text-base font-semibold text-ink">
                     {activity.name}
                   </p>
-                  {activity.time && (
-                    <span className="text-sm font-medium text-aegean">
-                      {activity.time}
-                    </span>
-                  )}
+                  <div className="flex items-center gap-2">
+                    {activity.time && (
+                      <span className="text-sm font-medium text-aegean">
+                        {activity.time}
+                      </span>
+                    )}
+                    {activity.status === "pending" && (
+                      <Badge className="bg-gold/25 text-aegean-dark">
+                        Pending
+                      </Badge>
+                    )}
+                  </div>
                 </div>
                 {activity.confirmationNumber && (
                   <p className="mt-1 text-sm text-ink-soft">
