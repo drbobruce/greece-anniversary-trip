@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { Badge, Card, SectionLabel } from "./Card";
-import { ExternalLinkIcon, MapPinIcon } from "./icons";
+import { ConfirmedBookingCard } from "./ConfirmedBookingCard";
 import { NearbyIdeas } from "./NearbyIdeas";
 import { PhotoPlaceholder } from "./PhotoPlaceholder";
-import { formatDateLong, getHotelBySlug } from "@/lib/utils";
+import { TransportLegCard } from "./TransportLegCard";
+import { formatDateLong, getHotelBySlug, getTransportLegsForDate } from "@/lib/utils";
 import { REGION_LABELS, type TripDay } from "@/lib/types";
 
 function ScheduleRow({
@@ -26,6 +27,7 @@ function ScheduleRow({
 
 export function DayDetail({ day }: { day: TripDay }) {
   const hotel = getHotelBySlug(day.hotelSlug);
+  const transportLegs = getTransportLegsForDate(day.date);
 
   return (
     <div className="flex flex-col gap-4">
@@ -52,6 +54,22 @@ export function DayDetail({ day }: { day: TripDay }) {
         </div>
       </Card>
 
+      {transportLegs.length > 0 && (
+        <div className="flex flex-col gap-3">
+          {transportLegs.map((leg) => (
+            <TransportLegCard key={leg.id} leg={leg} />
+          ))}
+        </div>
+      )}
+
+      {day.confirmedBookings && day.confirmedBookings.length > 0 && (
+        <div className="flex flex-col gap-3">
+          {day.confirmedBookings.map((booking) => (
+            <ConfirmedBookingCard key={booking.referenceNumber} booking={booking} />
+          ))}
+        </div>
+      )}
+
       <Card>
         <SectionLabel>Today&apos;s Plan</SectionLabel>
         <div className="divide-y divide-sand">
@@ -72,88 +90,10 @@ export function DayDetail({ day }: { day: TripDay }) {
           )}
       </Card>
 
-      {day.bookedActivities && day.bookedActivities.length > 0 && (
+      {day.notes && (
         <Card>
-          <SectionLabel>Booked Activities</SectionLabel>
-          <div className="flex flex-col gap-3">
-            {day.bookedActivities.map((activity, i) => (
-              <div
-                key={i}
-                className="rounded-2xl bg-sand/50 p-4 first:mt-0"
-              >
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <p className="font-serif text-base font-semibold text-ink">
-                    {activity.name}
-                  </p>
-                  <div className="flex items-center gap-2">
-                    {activity.time && (
-                      <span className="text-sm font-medium text-aegean">
-                        {activity.time}
-                      </span>
-                    )}
-                    {activity.status === "pending" && (
-                      <Badge className="bg-gold/25 text-aegean-dark">
-                        Pending
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-                {activity.confirmationNumber && (
-                  <p className="mt-1 text-sm text-ink-soft">
-                    Confirmation: {activity.confirmationNumber}
-                  </p>
-                )}
-                {activity.notes && (
-                  <p className="mt-1 text-sm text-ink-soft">{activity.notes}</p>
-                )}
-                <div className="mt-2 flex flex-wrap gap-3">
-                  {activity.mapsUrl && (
-                    <a
-                      href={activity.mapsUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm font-medium text-aegean hover:text-aegean-dark"
-                    >
-                      <MapPinIcon className="h-4 w-4" />
-                      Map
-                    </a>
-                  )}
-                  {activity.websiteUrl && (
-                    <a
-                      href={activity.websiteUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm font-medium text-aegean hover:text-aegean-dark"
-                    >
-                      <ExternalLinkIcon className="h-4 w-4" />
-                      Website
-                    </a>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </Card>
-      )}
-
-      {(day.confirmationDetails || day.notes) && (
-        <Card>
-          {day.confirmationDetails && (
-            <>
-              <SectionLabel>Confirmation Details</SectionLabel>
-              <p className="mb-4 text-sm leading-relaxed text-ink">
-                {day.confirmationDetails}
-              </p>
-            </>
-          )}
-          {day.notes && (
-            <>
-              <SectionLabel>Notes</SectionLabel>
-              <p className="text-sm leading-relaxed text-ink-soft">
-                {day.notes}
-              </p>
-            </>
-          )}
+          <SectionLabel>Notes</SectionLabel>
+          <p className="text-sm leading-relaxed text-ink-soft">{day.notes}</p>
         </Card>
       )}
 

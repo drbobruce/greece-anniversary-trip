@@ -1,7 +1,8 @@
 import { hotels } from "./data/hotels";
 import { places } from "./data/places";
+import { transportLegs } from "./data/transport";
 import { tripDays } from "./data/trip";
-import type { Place, PlaceCategory, Region, TripDay } from "./types";
+import type { Place, PlaceCategory, Region, TransportLeg, TripDay } from "./types";
 
 export { mapsSearchUrl } from "./maps";
 
@@ -36,6 +37,61 @@ export function getDayByDate(date: string): TripDay | undefined {
 export function getHotelBySlug(slug: string | undefined) {
   if (!slug) return undefined;
   return hotels.find((hotel) => hotel.slug === slug);
+}
+
+export function getTransportLegsForDate(date: string): TransportLeg[] {
+  return transportLegs.filter((leg) => leg.date === date);
+}
+
+export interface ConfirmationEntry {
+  category: "Flight" | "Ferry" | "Hotel" | "Activity";
+  label: string;
+  reference: string;
+  secondaryLabel?: string;
+  secondaryReference?: string;
+  date?: string;
+}
+
+/** Every confirmation/reference number in the trip, in one flat, sorted list. */
+export function getConfirmationEntries(): ConfirmationEntry[] {
+  const entries: ConfirmationEntry[] = [];
+
+  for (const leg of transportLegs) {
+    if (!leg.bookingReference) continue;
+    entries.push({
+      category: leg.mode === "ferry" ? "Ferry" : "Flight",
+      label: `${leg.carrier}${leg.number ? " " + leg.number : ""} — ${leg.origin} → ${leg.destination}`,
+      reference: leg.bookingReference,
+      secondaryLabel: leg.secondaryReferenceLabel,
+      secondaryReference: leg.secondaryReference,
+      date: leg.date,
+    });
+  }
+
+  for (const hotel of hotels) {
+    if (!hotel.confirmationNumber) continue;
+    entries.push({
+      category: "Hotel",
+      label: hotel.name,
+      reference: hotel.confirmationNumber,
+      secondaryLabel: hotel.tripId ? "Trip ID" : undefined,
+      secondaryReference: hotel.tripId,
+      date: hotel.checkIn,
+    });
+  }
+
+  for (const day of tripDays) {
+    for (const booking of day.confirmedBookings ?? []) {
+      entries.push({
+        category: "Activity",
+        label: booking.activityName,
+        reference: booking.referenceNumber,
+        date: booking.date,
+      });
+    }
+  }
+
+  return entries.sort((a, b) => (a.date ?? "").localeCompare(b.date ?? ""));
 }
 
 export function getPlacesByRegion(region: Region): Place[] {

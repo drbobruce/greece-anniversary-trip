@@ -84,3 +84,40 @@ export function CompassIcon({ className }: IconProps) {
     </svg>
   );
 }
+
+export function BadgeCheckIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <path d="m9 12.3 2 2 4.2-4.6" />
+      <path d="M12 3.5c.9 1 2.4 1.4 3.7 1 .9 1.1 2.2 1.7 3.6 1.7.2 1.4.9 2.6 2 3.4-.5 1.3-.5 2.8 0 4.1-1.1.8-1.8 2-2 3.4-1.4 0-2.7.6-3.6 1.7-1.3-.4-2.8 0-3.7 1-.9-1-2.4-1.4-3.7-1-.9-1.1-2.2-1.7-3.6-1.7-.2-1.4-.9-2.6-2-3.4.5-1.3.5-2.8 0-4.1 1.1-.8 1.8-2 2-3.4 1.4 0 2.7-.6 3.6-1.7.9.4 2.4 0 3.7-1Z" />
+    </svg>
+  );
+}
+
+export function PlaneIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <path d="M10.5 13.5 3.5 11l1-1.8 8 1.3 4.3-4.3a1.6 1.6 0 0 1 2.3 2.3l-4.3 4.3 1.3 8-1.8 1-2.5-7-4 4v2.6l-1.6 1.6-1-3.6-3.6-1 1.6-1.6h2.6l4-4Z" />
+    </svg>
+  );
+}
+
+export function AlertTriangleIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <path d="M12 3.8 21.2 19.5a1 1 0 0 1-.86 1.5H3.66a1 1 0 0 1-.86-1.5L12 3.8Z" />
+      <path d="M12 10v4.2" />
+      <circle cx="12" cy="17.3" r="0.15" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function ClipboardListIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <rect x="5.5" y="4.5" width="13" height="16.5" rx="2" />
+      <path d="M9 4.5V3.8A1.3 1.3 0 0 1 10.3 2.5h3.4A1.3 1.3 0 0 1 15 3.8v.7" />
+      <path d="M8.5 10.5h7M8.5 13.8h7M8.5 17.1h4.5" />
+    </svg>
+  );
+}

@@ -4,7 +4,16 @@ import { PhotoPlaceholder } from "./PhotoPlaceholder";
 import { formatDateShort } from "@/lib/utils";
 import type { Hotel } from "@/lib/types";
 
+function roomSummary(hotel: Hotel): string | undefined {
+  const parts = [hotel.roomType, hotel.bedConfig, hotel.sizeSqFt, hotel.view].filter(
+    Boolean
+  );
+  return parts.length > 0 ? parts.join(" · ") : undefined;
+}
+
 export function HotelCard({ hotel }: { hotel: Hotel }) {
+  const room = roomSummary(hotel);
+
   return (
     <Card className="overflow-hidden p-0!">
       <PhotoPlaceholder region={hotel.region} className="rounded-none!" />
@@ -16,6 +25,13 @@ export function HotelCard({ hotel }: { hotel: Hotel }) {
         <p className="mt-1 text-sm font-medium text-aegean">
           {formatDateShort(hotel.checkIn)} – {formatDateShort(hotel.checkOut)}
         </p>
+        {(hotel.checkInTime || hotel.checkOutTime) && (
+          <p className="text-xs text-ink-soft">
+            {hotel.checkInTime && `Check-in ${hotel.checkInTime}`}
+            {hotel.checkInTime && hotel.checkOutTime && " · "}
+            {hotel.checkOutTime && `Check-out ${hotel.checkOutTime}`}
+          </p>
+        )}
 
         {hotel.description && (
           <p className="mt-3 text-sm leading-relaxed text-ink">
@@ -27,18 +43,49 @@ export function HotelCard({ hotel }: { hotel: Hotel }) {
           <p className="mt-2 text-sm text-ink-soft">{hotel.address}</p>
         )}
 
-        {hotel.roomType && (
-          <p className="mt-2 text-sm text-ink-soft">Room: {hotel.roomType}</p>
+        {hotel.guestName && (
+          <p className="mt-2 text-sm text-ink-soft">Booked under: {hotel.guestName}</p>
+        )}
+        {hotel.guests && (
+          <p className="mt-1 text-sm text-ink-soft">Guests: {hotel.guests}</p>
+        )}
+        {room && <p className="mt-1 text-sm text-ink-soft">Room: {room}</p>}
+
+        {hotel.ratePlan && (
+          <p className="mt-2 text-sm text-ink-soft">{hotel.ratePlan}</p>
+        )}
+        {hotel.totalCost && (
+          <p className="mt-1 text-sm text-ink-soft">Total: {hotel.totalCost}</p>
+        )}
+        {hotel.taxesFeesNote && (
+          <p className="mt-1 text-sm text-ink-soft">Taxes & fees: {hotel.taxesFeesNote}</p>
         )}
 
         {hotel.confirmationNumber && (
-          <p className="mt-2 text-sm text-ink-soft">
-            Confirmation: {hotel.confirmationNumber}
-          </p>
+          <div className="mt-3 rounded-2xl bg-sand/50 px-4 py-3">
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-ink-soft">
+              Confirmation
+            </p>
+            <p className="mt-0.5 font-mono text-lg font-semibold tracking-wide text-ink">
+              {hotel.confirmationNumber}
+            </p>
+            {hotel.tripId && (
+              <p className="mt-1 text-xs text-ink-soft">Trip ID: {hotel.tripId}</p>
+            )}
+          </div>
         )}
 
-        {hotel.totalCost && (
-          <p className="mt-2 text-sm text-ink-soft">Total: {hotel.totalCost}</p>
+        {hotel.benefits && hotel.benefits.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-2">
+            {hotel.benefits.map((benefit) => (
+              <span
+                key={benefit}
+                className="rounded-full border border-aegean/30 px-3 py-1 text-xs font-medium text-aegean-dark"
+              >
+                ✓ {benefit}
+              </span>
+            ))}
+          </div>
         )}
 
         {hotel.notes && (

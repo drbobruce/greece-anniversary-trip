@@ -31,15 +31,105 @@ export interface Place {
   websiteUrl?: string;
 }
 
-export interface BookedActivity {
-  name: string;
-  time?: string;
-  confirmationNumber?: string;
+/**
+ * "booked" = paid/ticketed and not expected to change.
+ * "change-pending" = currently booked, but flagged for a likely change — do
+ * NOT treat as final.
+ * "planned" = an idea/preference only — nothing has been reserved yet.
+ */
+export type BookingStatus = "booked" | "change-pending" | "planned";
+
+/**
+ * One flight or ferry leg. Covers both so the "Flights & Ferry" view can
+ * render them together in chronological order. Only `id`, `mode`, `status`,
+ * `carrier`, `origin`, `destination`, and `date` are required — leave
+ * everything else out (never guessed) until the real value is known.
+ */
+export interface TransportLeg {
+  id: string;
+  mode: "flight" | "ferry";
+  status: BookingStatus;
+  carrier: string;
+  /** Flight number or vessel name, e.g. "AA374" or "Champion Jet 1" */
+  number?: string;
+  origin: string;
+  destination: string;
+  /** ISO date, YYYY-MM-DD — the departure date */
+  date: string;
+  departureTime?: string;
+  arrivalTime?: string;
+  /** For overnight/next-day arrivals, e.g. "Arrives Fri, Sep 11 · Terminal 5" */
+  arrivalNote?: string;
+  departureTerminal?: string;
+  arrivalTerminal?: string;
+  duration?: string;
+  cabin?: string;
+  /** Aircraft type or vessel name */
+  vehicle?: string;
+  fareFamily?: string;
+  bookingClass?: string;
+  passengers?: string[];
+  seats?: string[];
+  bookingReference?: string;
+  secondaryReferenceLabel?: string;
+  secondaryReference?: string;
   notes?: string;
+}
+
+/** A to-do item that isn't resolved yet — surfaced in the Open Items list. */
+export interface OpenItem {
+  id: string;
+  title: string;
+  detail?: string;
+  /** ISO date this item relates to, if any — links back to that day */
+  relatedDate?: string;
+}
+
+/**
+ * Research or an alternative that didn't make the main plan but is worth
+ * keeping around rather than deleting outright.
+ */
+export interface BackupIdea {
+  id: string;
+  title: string;
+  detail: string;
+  relatedDate?: string;
+}
+
+/**
+ * A confirmed, paid reservation for an activity/tour/experience (not a
+ * flight, ferry, or hotel — see `TransportLeg` and `Hotel`) — visually
+ * distinct in the UI from casual plans. Only fill in fields you actually
+ * have; everything but `activityName`, `date`, `startTime`, and
+ * `referenceNumber` is optional and should be left out (never guessed)
+ * until you have the real value.
+ */
+export interface ConfirmedBooking {
+  activityName: string;
+  /** ISO date, YYYY-MM-DD */
+  date: string;
+  startTime: string;
+  /** Labeled as an approximate finish in the UI, not a guaranteed end time. */
+  approximateEndTime?: string;
+  /** e.g. "approximately 3 hours" */
+  durationLabel?: string;
+  /** e.g. "2 adults" */
+  travelers?: string;
+  language?: string;
+  referenceNumber: string;
+  /** What the booking confirms is included, e.g. ["BBQ", "Open bar", "Transfer"] */
+  included?: string[];
+  meetingPoint?: string;
+  pickupTime?: string;
+  pickupLocation?: string;
+  ticketInfo?: string;
+  whatToBring?: string;
+  cancellationPolicy?: string;
+  operatorContact?: string;
+  bookingUrl?: string;
   mapsUrl?: string;
-  websiteUrl?: string;
-  /** Defaults to "confirmed" when omitted — set "pending" for anything still TBD. */
-  status?: "confirmed" | "pending";
+  /** Caveats, e.g. that an end time or pickup detail is only approximate/pending. */
+  notes?: string;
 }
 
 export interface Hotel {
@@ -47,12 +137,26 @@ export interface Hotel {
   name: string;
   region: Region;
   area: string;
+  address?: string;
+  /** Name the reservation is under, if different/notable, e.g. "Lisa Bruce" */
+  guestName?: string;
+  guests?: number;
   checkIn: string; // ISO date, YYYY-MM-DD
   checkOut: string; // ISO date, YYYY-MM-DD
-  address?: string;
+  checkInTime?: string;
+  checkOutTime?: string;
   roomType?: string;
+  bedConfig?: string;
+  sizeSqFt?: string;
+  view?: string;
   confirmationNumber?: string;
+  /** Booking platform's trip/itinerary ID, e.g. a Chase Travel Trip ID */
+  tripId?: string;
+  /** e.g. "Free Night / Points — 15,000/night (30,000 total)" */
+  ratePlan?: string;
   totalCost?: string;
+  taxesFeesNote?: string;
+  benefits?: string[];
   description?: string;
   notes?: string;
   mapsUrl?: string;
@@ -73,8 +177,8 @@ export interface TripDay {
   afternoonPlan?: string;
   dinner?: string;
   eveningPlan?: string;
-  bookedActivities?: BookedActivity[];
-  confirmationDetails?: string;
+  /** Paid, confirmed reservations for this day — rendered as prominent cards. */
+  confirmedBookings?: ConfirmedBooking[];
   notes?: string;
 }
 

@@ -33,6 +33,19 @@ export const places: Place[] = [
     mapsUrl: mapsSearchUrl("Acropolis Museum Athens"),
   },
   {
+    slug: "ancient-agora",
+    name: "Ancient Agora of Athens",
+    category: "historical-sites",
+    region: "athens",
+    area: "Monastiraki",
+    description:
+      "The marketplace and civic heart of ancient Athens, with the well-preserved Temple of Hephaestus.",
+    priceLevel: 2,
+    whyWeMightLikeIt:
+      "An extra-time option for Sep 12, not required — only add it if there's time left after Plaka and Monastiraki.",
+    mapsUrl: mapsSearchUrl("Ancient Agora of Athens"),
+  },
+  {
     slug: "mars-hill-areopagus",
     name: "Mars Hill (Areopagus)",
     category: "historical-sites",

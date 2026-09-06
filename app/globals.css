@@ -13,6 +13,8 @@
   --color-gold: #c9a66b;
   --color-ink: #2b2620;
   --color-ink-soft: #6b6154;
+  --color-terracotta: #b5583a;
+  --color-terracotta-light: #e3b8a4;
 }
 
 @theme inline {
@@ -27,6 +29,8 @@
   --color-gold: var(--color-gold);
   --color-ink: var(--color-ink);
   --color-ink-soft: var(--color-ink-soft);
+  --color-terracotta: var(--color-terracotta);
+  --color-terracotta-light: var(--color-terracotta-light);
   --font-serif: var(--font-playfair);
   --font-sans: var(--font-inter);
 }
