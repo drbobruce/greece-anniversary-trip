@@ -13,6 +13,20 @@ export const tripDays: TripDay[] = [
     label: "Travel Day",
     region: "transit",
     location: "In Transit — Charlotte → JFK → London Heathrow",
+    confirmedBookings: [
+      {
+        activityName: "Airport Parking — The Parking Spot (Charlotte/CLT, Covered Self-Park)",
+        date: "2026-09-10",
+        startTime: "10:30 AM (drop-off)",
+        referenceNumber: "127918656",
+        meetingPoint: "6210 Wilkinson Blvd., Charlotte, NC 28214",
+        operatorContact: "(704) 398-3776",
+        notes:
+          "Return pick-up (check-out): Saturday, September 19 at 9:00 PM.",
+        mapsUrl: mapsSearchUrl("The Parking Spot 6210 Wilkinson Blvd Charlotte NC"),
+      },
+    ],
+    morningPlan: "Drop off the car at The Parking Spot (CLT) around 10:30 AM before heading to check-in.",
     eveningPlan: "Overnight flight to London, connecting onward to Athens tomorrow.",
   },
   {
@@ -164,6 +178,6 @@ export const tripDays: TripDay[] = [
     location: "Crete → Athens → London → New York → Charlotte",
     hotelSlug: "domes-zeen-chania",
     notes:
-      "CHANGE PENDING — see Flights & Ferry and Open Items for full detail: currently booked to fly Aegean A3 301 from Heraklion (HER) to Athens at 6:00–6:50 AM, but this is flagged CHANGE RECOMMENDED since Domes Zeen is near Chania, not Heraklion, and the tight connection to the 8:15 AM BA641 is risky with checked luggage. Preferred plan: reposition to Chania airport (CHQ) the evening of Sep 18, stay overnight near Athens, then fly BA641 → BA173 → AA1959 home. Do not treat the CHQ flight or an Athens-airport hotel as booked until confirmed.",
+      "CHANGE PENDING — see Flights & Ferry and Open Items for full detail: currently booked to fly Aegean A3 301 from Heraklion (HER) to Athens at 6:00–6:50 AM, but this is flagged CHANGE RECOMMENDED since Domes Zeen is near Chania, not Heraklion, and the tight connection to the 8:15 AM BA641 is risky with checked luggage. Preferred plan: reposition to Chania airport (CHQ) the evening of Sep 18, stay overnight near Athens, then fly BA641 → BA173 → AA1959 home. Do not treat the CHQ flight or an Athens-airport hotel as booked until confirmed. Once home in Charlotte: pick up the car at The Parking Spot (CLT), confirmation 127918656, by 9:00 PM.",
   },
 ];
