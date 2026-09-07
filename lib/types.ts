@@ -5,30 +5,87 @@
 export type Region = "athens" | "santorini" | "crete" | "transit";
 
 export type PlaceCategory =
-  | "restaurants"
-  | "lunch"
-  | "coffee-breakfast"
-  | "things-to-do"
-  | "beaches-swimming"
-  | "historical-sites"
+  | "restaurant"
+  | "cafe"
+  | "bar"
+  | "attraction"
+  | "historic"
+  | "viewpoint"
+  | "beach"
+  | "swimming"
+  | "hike"
+  | "activity"
   | "shopping"
-  | "free-time-ideas";
+  | "hotel"
+  | "transportation";
 
 /** 1 = $, 2 = $$, 3 = $$$, 4 = $$$$ */
 export type PriceLevel = 1 | 2 | 3 | 4;
+
+export type BestTimeOfDay = "morning" | "afternoon" | "evening" | "sunset" | "night" | "any";
+
+/** 1 (low) to 5 (high) */
+export type Score = 1 | 2 | 3 | 4 | 5;
 
 export interface Place {
   slug: string;
   name: string;
   category: PlaceCategory;
+  /** Free-form refinement, e.g. "lunch", "dinner", "wine bar" */
+  subcategory?: string;
   region: Region;
   /** Neighborhood or town, e.g. "Plaka", "Oia", "Chania Old Town" */
   area: string;
+  lat: number;
+  lng: number;
   description: string;
+  whyWeLikeIt: string;
+  /** Numeric so it's usable for time-budget matching; format for display. */
+  expectedDurationMinutes?: number;
+  bestTimeOfDay?: BestTimeOfDay;
   priceLevel?: PriceLevel;
-  whyWeMightLikeIt: string;
+  romanticScore?: Score;
+  activityScore?: Score;
+  scenicScore?: Score;
+  /** Cuisine descriptor — restaurants/cafes/bars only */
+  foodStyle?: string;
+  reservationRecommended?: boolean;
+  phone?: string;
+  /** Freeform, e.g. "Daily 11am–11pm" — no live source, keep it simple */
+  openingHours?: string;
+  tags?: string[];
   mapsUrl?: string;
   websiteUrl?: string;
+  notes?: string;
+}
+
+export type MoodTag =
+  | "romantic"
+  | "scenic"
+  | "active"
+  | "historic"
+  | "beach"
+  | "shopping"
+  | "casual-food"
+  | "nice-dinner"
+  | "coffee"
+  | "drinks"
+  | "relax";
+
+export type TimeBudgetMinutes = 30 | 60 | 120 | 240 | 480;
+
+/** Per-device favorite tracking — never stored in the committed trip data. */
+export type FavoriteStatus = "favorite" | "maybe-later" | "done";
+
+/** The single soonest upcoming confirmed thing, used for "leave-by" awareness. */
+export interface NextEvent {
+  kind: "flight" | "ferry" | "activity" | "hotel-checkin";
+  title: string;
+  at: Date;
+  lat?: number;
+  lng?: number;
+  referenceNumber?: string;
+  mapsUrl?: string;
 }
 
 /**
@@ -183,14 +240,19 @@ export interface TripDay {
 }
 
 export const PLACE_CATEGORY_LABELS: Record<PlaceCategory, string> = {
-  restaurants: "Restaurants",
-  lunch: "Lunch",
-  "coffee-breakfast": "Coffee & Breakfast",
-  "things-to-do": "Things to Do",
-  "beaches-swimming": "Beaches & Swimming",
-  "historical-sites": "Historical Sites",
+  restaurant: "Restaurants",
+  cafe: "Cafés",
+  bar: "Bars",
+  attraction: "Things to Do",
+  historic: "Historical Sites",
+  viewpoint: "Viewpoints",
+  beach: "Beaches",
+  swimming: "Swimming",
+  hike: "Hikes",
+  activity: "Activities",
   shopping: "Shopping",
-  "free-time-ideas": "Free-Time Ideas",
+  hotel: "Hotels",
+  transportation: "Transportation",
 };
 
 export const REGION_LABELS: Record<Region, string> = {

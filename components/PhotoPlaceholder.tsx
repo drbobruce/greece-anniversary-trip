@@ -20,14 +20,19 @@ const REGION_STYLES: Record<Region, { gradient: string; icon: string }> = {
 };
 
 const CATEGORY_ICONS: Record<PlaceCategory, string> = {
-  restaurants: "🍽️",
-  lunch: "🥗",
-  "coffee-breakfast": "☕",
-  "things-to-do": "🧭",
-  "beaches-swimming": "🌊",
-  "historical-sites": "🏛️",
+  restaurant: "🍽️",
+  cafe: "☕",
+  bar: "🍸",
+  attraction: "🧭",
+  historic: "🏛️",
+  viewpoint: "🌄",
+  beach: "🏖️",
+  swimming: "🌊",
+  hike: "🥾",
+  activity: "🎯",
   shopping: "🛍️",
-  "free-time-ideas": "🌿",
+  hotel: "🛏️",
+  transportation: "🚗",
 };
 
 interface PhotoPlaceholderProps {

@@ -37,7 +37,7 @@ export function PlaceCard({ place }: { place: Place }) {
           {place.description}
         </p>
         <p className="mt-1.5 text-sm italic leading-relaxed text-aegean-dark">
-          {place.whyWeMightLikeIt}
+          {place.whyWeLikeIt}
         </p>
 
         <div className="mt-3 flex flex-wrap gap-3">
