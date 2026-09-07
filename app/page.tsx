@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Card, SectionLabel } from "@/components/Card";
 import { ChevronRightIcon } from "@/components/icons";
+import { CoverPhoto } from "@/components/CoverPhoto";
 import { DayDetail } from "@/components/DayDetail";
-import { PhotoPlaceholder } from "@/components/PhotoPlaceholder";
 import { formatDateLong, getTodayInfo } from "@/lib/utils";
 
 // "Today" depends on the real-world date, so always render it fresh.
@@ -19,7 +19,7 @@ export default function TodayPage() {
     return (
       <div className="flex flex-col gap-4">
         <Card className="overflow-hidden p-0!">
-          <PhotoPlaceholder region="santorini" className="rounded-none!" />
+          <CoverPhoto />
           <div className="p-6 text-center">
             <p className="text-sm font-semibold uppercase tracking-widest text-aegean">
               Countdown to Greece
@@ -79,7 +79,7 @@ export default function TodayPage() {
   return (
     <div className="flex flex-col gap-4">
       <Card className="overflow-hidden p-0!">
-        <PhotoPlaceholder region="crete" className="rounded-none!" />
+        <CoverPhoto />
         <div className="p-6 text-center">
           <p className="text-sm font-semibold uppercase tracking-widest text-aegean">
             Efharisto, Greece
