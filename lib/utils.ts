@@ -39,6 +39,25 @@ export function getHotelBySlug(slug: string | undefined) {
   return hotels.find((hotel) => hotel.slug === slug);
 }
 
+/** The hotel relevant right now — current stay if mid-trip, otherwise the first/last one, for quick reference. */
+export function getCurrentOrNextHotel(now: Date = new Date()) {
+  const info = getTodayInfo(now);
+  const sorted = [...hotels].sort((a, b) => a.checkIn.localeCompare(b.checkIn));
+  if (info.status === "during" && info.day?.hotelSlug) {
+    return getHotelBySlug(info.day.hotelSlug) ?? sorted[0];
+  }
+  if (info.status === "after") return sorted[sorted.length - 1];
+  return sorted[0];
+}
+
+/** The single soonest upcoming leg of a given mode — for a quick-reference summary, not the full list. */
+export function getUpcomingTransportLeg(mode: "flight" | "ferry", now: Date = new Date()) {
+  const todayIso = now.toISOString().slice(0, 10);
+  return transportLegs
+    .filter((leg) => leg.mode === mode && leg.status !== "planned" && leg.date >= todayIso)
+    .sort((a, b) => a.date.localeCompare(b.date))[0];
+}
+
 export function getTransportLegsForDate(date: string): TransportLeg[] {
   return transportLegs.filter((leg) => leg.date === date);
 }

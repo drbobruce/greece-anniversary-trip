@@ -7,7 +7,7 @@ import { TransportLegCard } from "./TransportLegCard";
 import { formatDateLong, getHotelBySlug, getTransportLegsForDate } from "@/lib/utils";
 import { REGION_LABELS, type TripDay } from "@/lib/types";
 
-function ScheduleRow({
+export function ScheduleRow({
   label,
   value,
 }: {

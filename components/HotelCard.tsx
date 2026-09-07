@@ -1,6 +1,8 @@
 import { Badge, Card, SectionLabel } from "./Card";
+import { CopyableCode } from "./CopyableCode";
 import { ExternalLinkIcon, MapPinIcon } from "./icons";
 import { PhotoPlaceholder } from "./PhotoPlaceholder";
+import { telUrl } from "@/lib/maps";
 import { formatDateShort } from "@/lib/utils";
 import type { Hotel } from "@/lib/types";
 
@@ -66,9 +68,9 @@ export function HotelCard({ hotel }: { hotel: Hotel }) {
             <p className="text-[11px] font-semibold uppercase tracking-widest text-ink-soft">
               Confirmation
             </p>
-            <p className="mt-0.5 font-mono text-lg font-semibold tracking-wide text-ink">
-              {hotel.confirmationNumber}
-            </p>
+            <div className="mt-0.5 text-lg font-semibold tracking-wide text-ink">
+              <CopyableCode value={hotel.confirmationNumber} />
+            </div>
             {hotel.tripId && (
               <p className="mt-1 text-xs text-ink-soft">Trip ID: {hotel.tripId}</p>
             )}
@@ -120,6 +122,14 @@ export function HotelCard({ hotel }: { hotel: Hotel }) {
             >
               <ExternalLinkIcon className="h-4 w-4" />
               Website
+            </a>
+          )}
+          {hotel.phone && (
+            <a
+              href={telUrl(hotel.phone)}
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-aegean hover:text-aegean-dark"
+            >
+              📞 Call
             </a>
           )}
         </div>

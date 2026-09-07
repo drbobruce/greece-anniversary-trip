@@ -14,7 +14,9 @@ export default function FlightsPage() {
     <div className="flex flex-col gap-4">
       <div>
         <h1 className="font-serif text-2xl font-semibold text-ink">Flights & Ferry</h1>
-        <p className="text-ink-soft">Every leg, in order — booked, change-pending, and planned.</p>
+        <p className="text-ink-soft">
+          Every leg, in order — booked, change under consideration, and planned.
+        </p>
       </div>
 
       {dates.map((date) => (

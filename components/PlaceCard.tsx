@@ -1,4 +1,5 @@
 import { Badge, Card } from "./Card";
+import { FavoriteControl } from "./FavoriteControl";
 import { ExternalLinkIcon, MapPinIcon } from "./icons";
 import { PhotoPlaceholder } from "./PhotoPlaceholder";
 import { PLACE_CATEGORY_LABELS, type Place } from "@/lib/types";
@@ -40,7 +41,11 @@ export function PlaceCard({ place }: { place: Place }) {
           {place.whyWeLikeIt}
         </p>
 
-        <div className="mt-3 flex flex-wrap gap-3">
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+          <FavoriteControl slug={place.slug} />
+        </div>
+
+        <div className="mt-2 flex flex-wrap gap-3">
           {place.mapsUrl && (
             <a
               href={place.mapsUrl}

@@ -13,15 +13,19 @@ export interface GeolocationState {
 
 /** One-shot geolocation read. Denial/error just leaves `coords` unset — callers should fall back gracefully. */
 export function useGeolocation(): GeolocationState {
-  const [state, setState] = useState<GeolocationState>(() => {
-    if (typeof navigator === "undefined" || !navigator.geolocation) {
-      return { status: "error", error: "Location isn't available on this device." };
-    }
-    return { status: "prompt" };
-  });
+  // Starts at a fixed, SSR-safe default rather than branching on `navigator`
+  // in the initializer — that would read differently on the server (no
+  // `navigator`) than on the client's first render, causing a hydration
+  // mismatch. The real status is only known client-side, so it's set from
+  // the effect below.
+  const [state, setState] = useState<GeolocationState>({ status: "idle" });
 
   useEffect(() => {
-    if (typeof navigator === "undefined" || !navigator.geolocation) return;
+    if (typeof navigator === "undefined" || !navigator.geolocation) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only check; must happen post-hydration, not in the render-safe initializer above
+      setState({ status: "error", error: "Location isn't available on this device." });
+      return;
+    }
 
     navigator.geolocation.getCurrentPosition(
       (position) => {

@@ -143,6 +143,29 @@ export interface OpenItem {
 }
 
 /**
+ * An airport or ferry port used as a transportation departure point — NOT a
+ * recommendation. Used only so the trip-aware engine can estimate travel
+ * time from the current location to a critical departure point for a
+ * "leave by" calculation. Never surfaced as a place to visit.
+ */
+export interface TransitPoint {
+  id: string;
+  name: string;
+  /** IATA airport code, when applicable */
+  code?: string;
+  kind: "airport" | "ferry-port";
+  lat: number;
+  lng: number;
+}
+
+/** A short contingency Q&A for the Travel Help screen — empty until you supply the answer. */
+export interface ContingencyNote {
+  id: string;
+  question: string;
+  answer?: string;
+}
+
+/**
  * Research or an alternative that didn't make the main plan but is worth
  * keeping around rather than deleting outright.
  */
@@ -195,6 +218,7 @@ export interface Hotel {
   region: Region;
   area: string;
   address?: string;
+  phone?: string;
   /** Name the reservation is under, if different/notable, e.g. "Lisa Bruce" */
   guestName?: string;
   guests?: number;

@@ -5,6 +5,7 @@ import {
   ChevronRightIcon,
   ClipboardListIcon,
   CompassIcon,
+  LifeBuoyIcon,
   PlaneIcon,
 } from "@/components/icons";
 import { openItems } from "@/lib/data/openItems";
@@ -14,6 +15,12 @@ export const metadata = {
 };
 
 const TILES = [
+  {
+    href: "/travel/help",
+    label: "Travel Help",
+    description: "Next flight, hotel, ferry, and important connections — fast",
+    Icon: LifeBuoyIcon,
+  },
   {
     href: "/travel/flights",
     label: "Flights & Ferry",

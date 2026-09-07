@@ -169,15 +169,15 @@ export const tripDays: TripDay[] = [
     afternoonPlan: "Return from Balos; relax or continue exploring Chania Old Town.",
     dinner: "Romantic dinner/seafood in Chania Old Town.",
     notes:
-      "This is the primary Crete adventure day. We only have a short Crete stay, so Samaria Gorge is intentionally not on the plan. CHANGE PENDING: if the preferred return plan is adopted, this evening may instead include a flight from Chania to Athens rather than an overnight stay here — see the Sep 19 return plan and Open Items.",
+      "This is the primary Crete adventure day. We only have a short Crete stay, so Samaria Gorge is intentionally not on the plan. CHANGE UNDER CONSIDERATION: if the possible return-flight change is made, this evening may instead include a flight from Chania to Athens rather than an overnight stay here — see the Sep 19 return plan and Open Items. Nothing is booked for tonight beyond the current hotel stay.",
   },
   {
     date: "2026-09-19",
-    label: "Return (Change Pending)",
+    label: "Return (Change Under Consideration)",
     region: "crete",
     location: "Crete → Athens → London → New York → Charlotte",
     hotelSlug: "domes-zeen-chania",
     notes:
-      "CHANGE PENDING — see Flights & Ferry and Open Items for full detail: currently booked to fly Aegean A3 301 from Heraklion (HER) to Athens at 6:00–6:50 AM, but this is flagged CHANGE RECOMMENDED since Domes Zeen is near Chania, not Heraklion, and the tight connection to the 8:15 AM BA641 is risky with checked luggage. Preferred plan: reposition to Chania airport (CHQ) the evening of Sep 18, stay overnight near Athens, then fly BA641 → BA173 → AA1959 home. Do not treat the CHQ flight or an Athens-airport hotel as booked until confirmed. Once home in Charlotte: pick up the car at The Parking Spot (CLT), confirmation 127918656, by 9:00 PM.",
+      "CHANGE UNDER CONSIDERATION — see Flights & Ferry and Open Items for full detail: CURRENTLY BOOKED to fly Aegean A3 301 from Heraklion (HER) to Athens at 6:00–6:50 AM, confirmation 9Y3G2J — this booking is accurate and unchanged. We are considering switching the departure airport to Chania (CHQ) instead, since Domes Zeen is near Chania and the tight connection to the 8:15 AM BA641 is risky with checked luggage, but no replacement flight has been booked. Do not treat CHQ or an Athens-airport hotel as booked. Once home in Charlotte: pick up the car at The Parking Spot (CLT), confirmation 127918656, by 9:00 PM.",
   },
 ];

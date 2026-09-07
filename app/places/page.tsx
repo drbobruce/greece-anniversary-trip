@@ -3,10 +3,12 @@
 import { useMemo, useState } from "react";
 import { Chip } from "@/components/Chip";
 import { PlaceCard } from "@/components/PlaceCard";
+import { useFavorites } from "@/lib/favorites";
 import { places } from "@/lib/data/places";
 import {
   PLACE_CATEGORY_LABELS,
   REGION_LABELS,
+  type FavoriteStatus,
   type PlaceCategory,
   type Region,
 } from "@/lib/types";
@@ -14,17 +16,26 @@ import {
 const CATEGORIES = Object.keys(PLACE_CATEGORY_LABELS) as PlaceCategory[];
 const REGIONS: Region[] = ["athens", "santorini", "crete"];
 
+const SAVED_FILTERS: { value: FavoriteStatus; label: string }[] = [
+  { value: "favorite", label: "♥ Favorites" },
+  { value: "maybe-later", label: "♡ Maybe Later" },
+  { value: "done", label: "✓ Done" },
+];
+
 export default function PlacesPage() {
   const [region, setRegion] = useState<Region | "all">("all");
   const [category, setCategory] = useState<PlaceCategory | "all">("all");
+  const [saved, setSaved] = useState<FavoriteStatus | "all">("all");
+  const { statuses } = useFavorites();
 
   const filtered = useMemo(() => {
     return places.filter(
       (place) =>
         (region === "all" || place.region === region) &&
-        (category === "all" || place.category === category)
+        (category === "all" || place.category === category) &&
+        (saved === "all" || statuses[place.slug] === saved)
     );
-  }, [region, category]);
+  }, [region, category, saved, statuses]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -59,6 +70,17 @@ export default function PlacesPage() {
             onClick={() => setCategory(c)}
           >
             {PLACE_CATEGORY_LABELS[c]}
+          </Chip>
+        ))}
+      </div>
+
+      <div className="-mx-4 flex gap-2 overflow-x-auto px-4">
+        <Chip active={saved === "all"} onClick={() => setSaved("all")}>
+          Everything
+        </Chip>
+        {SAVED_FILTERS.map(({ value, label }) => (
+          <Chip key={value} active={saved === value} onClick={() => setSaved(value)}>
+            {label}
           </Chip>
         ))}
       </div>

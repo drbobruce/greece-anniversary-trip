@@ -87,7 +87,7 @@ export const hotels: Hotel[] = [
     description:
       "The final stop of the trip, on the coast near Chania on Crete's northwest shore. Stay: 2 nights, 1 room.",
     notes:
-      "The currently booked return flight (A3 301) departs from Heraklion (HER), not Chania — see the Sep 19 return plan under Open Items, which is change pending.",
+      "The currently booked return flight (A3 301, confirmation 9Y3G2J) departs from Heraklion (HER), not Chania — see the Sep 19 return plan under Open Items. A change to Chania (CHQ) is under consideration but not booked.",
     mapsUrl: mapsSearchUrl("Domes Zeen Chania Crete"),
   },
 ];

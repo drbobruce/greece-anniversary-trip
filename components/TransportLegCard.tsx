@@ -1,4 +1,5 @@
 import { AlertTriangleIcon, BadgeCheckIcon, PlaneIcon } from "./icons";
+import { CopyableCode } from "./CopyableCode";
 import { formatDateLong } from "@/lib/utils";
 import type { TransportLeg } from "@/lib/types";
 
@@ -19,7 +20,7 @@ const STATUS_STYLE = {
   "change-pending": {
     card: "border-terracotta/50 bg-terracotta/10",
     ribbon: "bg-terracotta text-cream",
-    label: "CURRENTLY BOOKED — CHANGE PENDING",
+    label: "CURRENTLY BOOKED — CHANGE UNDER CONSIDERATION",
     Icon: AlertTriangleIcon,
     heading: "text-ink",
     sub: "text-ink-soft",
@@ -103,9 +104,9 @@ export function TransportLegCard({ leg }: { leg: TransportLeg }) {
             <p className="text-[11px] font-semibold uppercase tracking-widest opacity-60">
               Booking Reference
             </p>
-            <p className={`mt-0.5 font-mono text-xl font-semibold tracking-wide ${style.ref}`}>
-              {leg.bookingReference}
-            </p>
+            <div className={`mt-0.5 text-xl font-semibold tracking-wide ${style.ref}`}>
+              <CopyableCode value={leg.bookingReference} />
+            </div>
             {leg.secondaryReference && (
               <p className="mt-1 text-xs opacity-70">
                 {leg.secondaryReferenceLabel ?? "Reference"}: {leg.secondaryReference}

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Card, SectionLabel } from "@/components/Card";
 import { ChevronRightIcon } from "@/components/icons";
 import { CoverPhoto } from "@/components/CoverPhoto";
-import { DayDetail } from "@/components/DayDetail";
+import { TravelDashboard } from "@/components/TravelDashboard";
 import { formatDateLong, getTodayInfo } from "@/lib/utils";
 
 // "Today" depends on the real-world date, so always render it fresh.
@@ -12,7 +12,7 @@ export default function TodayPage() {
   const info = getTodayInfo();
 
   if (info.status === "during" && info.day) {
-    return <DayDetail day={info.day} />;
+    return <TravelDashboard day={info.day} />;
   }
 
   if (info.status === "before" && info.nextDay) {

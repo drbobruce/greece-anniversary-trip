@@ -112,6 +112,16 @@ export function AlertTriangleIcon({ className }: IconProps) {
   );
 }
 
+export function LifeBuoyIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <circle cx="12" cy="12" r="8.5" />
+      <circle cx="12" cy="12" r="3.3" />
+      <path d="m6.5 6.5 3 3M17.5 6.5l-3 3M6.5 17.5l3-3M17.5 17.5l-3-3" />
+    </svg>
+  );
+}
+
 export function ClipboardListIcon({ className }: IconProps) {
   return (
     <svg {...base} className={className} aria-hidden="true">

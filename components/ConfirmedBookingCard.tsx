@@ -1,4 +1,5 @@
 import { BadgeCheckIcon, ExternalLinkIcon, MapPinIcon } from "./icons";
+import { CopyableCode } from "./CopyableCode";
 import { formatDateLong } from "@/lib/utils";
 import type { ConfirmedBooking } from "@/lib/types";
 
@@ -78,9 +79,9 @@ export function ConfirmedBookingCard({ booking }: { booking: ConfirmedBooking })
           <p className="text-[11px] font-semibold uppercase tracking-widest text-cream/60">
             Booking Reference
           </p>
-          <p className="mt-0.5 font-mono text-xl font-semibold tracking-wide text-cream">
-            {booking.referenceNumber}
-          </p>
+          <div className="mt-0.5 text-xl font-semibold tracking-wide text-cream">
+            <CopyableCode value={booking.referenceNumber} />
+          </div>
         </div>
 
         {hasMeetingInfo && (

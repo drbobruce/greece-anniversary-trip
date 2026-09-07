@@ -115,7 +115,7 @@ export const transportLegs: TransportLeg[] = [
     bookingClass: "S",
     bookingReference: "9Y3G2J",
     notes:
-      "CURRENTLY BOOKED, but CHANGE RECOMMENDED: Domes Zeen is near Chania, not Heraklion, and a 6:50 AM arrival into Athens ahead of the 8:15 AM BA641 departure is too risky with checked luggage. Preferred plan: fly Chania (CHQ) → Athens the evening of Sep 18 and stay overnight near the airport — see the planned Sep 18 leg on the Flights & Ferry page. Also reconsidering whether the Crete departure airport itself should move to one closer to Chania. Not booked until confirmed.",
+      "CURRENTLY BOOKED — CHANGE UNDER CONSIDERATION: Domes Zeen is near Chania, not Heraklion, and a 6:50 AM arrival into Athens ahead of the 8:15 AM BA641 departure is too risky with checked luggage. We are considering changing the departure airport from HER to CHQ instead — see the possible Sep 18 leg on the Flights & Ferry page. This reservation (HER → ATH, 6:00–6:50 AM, confirmation 9Y3G2J) remains the current booking and has NOT been changed. Do not treat CHQ as booked.",
   },
   {
     id: "chq-ath-preferred",
@@ -127,7 +127,7 @@ export const transportLegs: TransportLeg[] = [
     date: "2026-09-18",
     departureTime: "Evening (exact time TBD)",
     notes:
-      "Preferred replacement for the currently-booked A3 301. Carrier, flight number, exact time, and an Athens-airport-area hotel for the night of Sep 18 are all still TBD — do not treat as booked. See Open Items.",
+      "A possible replacement for the currently-booked A3 301 (HER → ATH) — under consideration only, not booked. Carrier, flight number, exact time, and an Athens-airport-area hotel for the night of Sep 18 are all still TBD. See Open Items.",
   },
   {
     id: "ba641",

@@ -1,4 +1,5 @@
 import { Card } from "@/components/Card";
+import { CopyableCode } from "@/components/CopyableCode";
 import { formatDateShort, getConfirmationEntries } from "@/lib/utils";
 
 export const metadata = {
@@ -32,9 +33,9 @@ export default function ReservationsPage() {
                 </p>
               )}
             </div>
-            <p className="shrink-0 font-mono text-lg font-semibold tracking-wide text-ink">
-              {entry.reference}
-            </p>
+            <div className="shrink-0 text-lg font-semibold tracking-wide text-ink">
+              <CopyableCode value={entry.reference} />
+            </div>
           </Card>
         ))}
       </div>

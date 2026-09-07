@@ -1,6 +1,6 @@
 import { places } from "./data/places";
 import { estimateTravelMinutes, haversineKm, type Coords } from "./geo";
-import type { MoodTag, Place, PlaceCategory, Region } from "./types";
+import type { MoodTag, NextEvent, Place, PlaceCategory, Region } from "./types";
 
 export interface RecommendationContext {
   region: Region;
@@ -11,7 +11,22 @@ export interface RecommendationContext {
   mood?: MoodTag;
   /** Minutes until the next confirmed event, if known — used to suppress risky picks. */
   minutesUntilNextEvent?: number;
+  /** What kind the next event is — critical transportation gets a bigger safety margin. */
+  nextEventKind?: NextEvent["kind"];
 }
+
+/**
+ * How much extra safety margin to build into the "does this fit?" check,
+ * on top of the activity's own duration and round-trip travel time.
+ * Missing a flight is a much bigger deal than being a few minutes late
+ * back from coffee, so critical transportation gets the most padding.
+ */
+const SAFETY_MARGIN_BY_KIND: Record<NextEvent["kind"], number> = {
+  flight: 1.6,
+  ferry: 1.4,
+  activity: 1.15,
+  "hotel-checkin": 1.1,
+};
 
 export interface ScoredPlace {
   place: Place;
@@ -20,6 +35,8 @@ export interface ScoredPlace {
   travelMinutes?: number;
   /** True if fitting this in would risk being late for the next confirmed event. */
   risksLateness: boolean;
+  /** Minutes of margin before the next event, once this activity + travel is accounted for. */
+  minutesToSpare?: number;
 }
 
 export interface RightNowRecommendations {
@@ -97,16 +114,19 @@ function scorePlace(place: Place, ctx: RecommendationContext): ScoredPlace {
   }
 
   let risksLateness = false;
+  let minutesToSpare: number | undefined;
   if (ctx.minutesUntilNextEvent != null && place.expectedDurationMinutes != null) {
     const roundTripTravel = (travelMinutes ?? 15) * 2;
-    const totalNeeded = place.expectedDurationMinutes + roundTripTravel;
-    if (totalNeeded > ctx.minutesUntilNextEvent) {
+    const margin = ctx.nextEventKind ? SAFETY_MARGIN_BY_KIND[ctx.nextEventKind] : 1;
+    const totalNeeded = (place.expectedDurationMinutes + roundTripTravel) * margin;
+    minutesToSpare = Math.round(ctx.minutesUntilNextEvent - totalNeeded);
+    if (minutesToSpare < 0) {
       risksLateness = true;
       score -= 25;
     }
   }
 
-  return { place, score, distanceKm, travelMinutes, risksLateness };
+  return { place, score, distanceKm, travelMinutes, risksLateness, minutesToSpare };
 }
 
 /**

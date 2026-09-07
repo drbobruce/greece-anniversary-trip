@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import { BottomNav } from "@/components/BottomNav";
 import { Header } from "@/components/Header";
+import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -19,6 +20,11 @@ export const metadata: Metadata = {
   title: "Greece, Together — 30th Anniversary",
   description:
     "A private day-by-day guide to our 30th anniversary trip to Athens, Santorini, and Crete.",
+  appleWebApp: {
+    capable: true,
+    title: "Greece 30",
+    statusBarStyle: "black-translucent",
+  },
 };
 
 export const viewport: Viewport = {
@@ -39,6 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <BottomNav />
+        <ServiceWorkerRegister />
       </body>
     </html>
   );
