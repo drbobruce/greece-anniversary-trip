@@ -2,6 +2,7 @@ import { Badge, Card, SectionLabel } from "./Card";
 import { ConfirmedBookingCard } from "./ConfirmedBookingCard";
 import { ScheduleRow } from "./DayDetail";
 import { HotelCard } from "./HotelCard";
+import { LocalTimeBanner } from "./LocalTimeBanner";
 import { NearbyIdeas } from "./NearbyIdeas";
 import { NextUpCard } from "./NextUpCard";
 import { RightNowCompact } from "./RightNowCompact";
@@ -39,6 +40,9 @@ export function TravelDashboard({ day }: { day: TripDay }) {
         <div className="mt-2 flex flex-wrap items-center gap-2">
           <Badge>{REGION_LABELS[day.region]}</Badge>
           <span className="text-sm text-ink-soft">{day.location}</span>
+        </div>
+        <div className="mt-3">
+          <LocalTimeBanner now={now} />
         </div>
       </Card>
 

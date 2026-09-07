@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Card, SectionLabel } from "@/components/Card";
 import {
   BadgeCheckIcon,
+  CameraIcon,
   ChevronRightIcon,
   ClipboardListIcon,
   CompassIcon,
@@ -44,6 +45,12 @@ const TILES = [
     label: "Optional / Backup Ideas",
     description: "Alternatives worth keeping, kept out of the main plan",
     Icon: CompassIcon,
+  },
+  {
+    href: "/travel/photos",
+    label: "Trip Photos",
+    description: "A shared album family can see too",
+    Icon: CameraIcon,
   },
 ];
 
