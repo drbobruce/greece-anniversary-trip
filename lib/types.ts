@@ -165,6 +165,14 @@ export interface ContingencyNote {
   answer?: string;
 }
 
+/** A photo uploaded from a phone, stored in Vercel Blob — metadata only lives in the shared manifest. */
+export interface PhotoEntry {
+  url: string;
+  caption?: string;
+  /** ISO timestamp */
+  uploadedAt: string;
+}
+
 /**
  * Research or an alternative that didn't make the main plan but is worth
  * keeping around rather than deleting outright.

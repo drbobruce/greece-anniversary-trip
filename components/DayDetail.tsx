@@ -1,11 +1,31 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { Badge, Card, SectionLabel } from "./Card";
 import { ConfirmedBookingCard } from "./ConfirmedBookingCard";
 import { NearbyIdeas } from "./NearbyIdeas";
 import { PhotoPlaceholder } from "./PhotoPlaceholder";
 import { TransportLegCard } from "./TransportLegCard";
+import { parseTimeOnDate } from "@/lib/nextEvent";
 import { formatDateLong, getHotelBySlug, getTransportLegsForDate } from "@/lib/utils";
 import { REGION_LABELS, type TripDay } from "@/lib/types";
+
+/** Transport legs and confirmed bookings interleaved in actual time order (e.g. an early drop-off before a later flight), not grouped by type. */
+function getTimeOrderedEvents(day: TripDay): { key: string; node: ReactNode }[] {
+  const legs = getTransportLegsForDate(day.date).map((leg) => ({
+    key: leg.id,
+    at: parseTimeOnDate(leg.date, leg.departureTime),
+    node: <TransportLegCard leg={leg} />,
+  }));
+  const bookings = (day.confirmedBookings ?? []).map((booking) => ({
+    key: booking.referenceNumber,
+    at: parseTimeOnDate(booking.date, booking.startTime),
+    node: <ConfirmedBookingCard booking={booking} />,
+  }));
+
+  return [...legs, ...bookings]
+    .sort((a, b) => (a.at?.getTime() ?? Infinity) - (b.at?.getTime() ?? Infinity))
+    .map(({ key, node }) => ({ key, node }));
+}
 
 export function ScheduleRow({
   label,
@@ -27,7 +47,7 @@ export function ScheduleRow({
 
 export function DayDetail({ day }: { day: TripDay }) {
   const hotel = getHotelBySlug(day.hotelSlug);
-  const transportLegs = getTransportLegsForDate(day.date);
+  const timeOrderedEvents = getTimeOrderedEvents(day);
 
   return (
     <div className="flex flex-col gap-4">
@@ -54,18 +74,10 @@ export function DayDetail({ day }: { day: TripDay }) {
         </div>
       </Card>
 
-      {transportLegs.length > 0 && (
+      {timeOrderedEvents.length > 0 && (
         <div className="flex flex-col gap-3">
-          {transportLegs.map((leg) => (
-            <TransportLegCard key={leg.id} leg={leg} />
-          ))}
-        </div>
-      )}
-
-      {day.confirmedBookings && day.confirmedBookings.length > 0 && (
-        <div className="flex flex-col gap-3">
-          {day.confirmedBookings.map((booking) => (
-            <ConfirmedBookingCard key={booking.referenceNumber} booking={booking} />
+          {timeOrderedEvents.map(({ key, node }) => (
+            <div key={key}>{node}</div>
           ))}
         </div>
       )}

@@ -7,7 +7,7 @@ import { NearbyIdeas } from "./NearbyIdeas";
 import { NextUpCard } from "./NextUpCard";
 import { RightNowCompact } from "./RightNowCompact";
 import { TransportLegCard } from "./TransportLegCard";
-import { getNextEvent, minutesUntil } from "@/lib/nextEvent";
+import { getNextEvent, minutesUntil, parseTimeOnDate } from "@/lib/nextEvent";
 import { formatDateLong, getHotelBySlug, getTransportLegsForDate } from "@/lib/utils";
 import { REGION_LABELS, type TripDay } from "@/lib/types";
 
@@ -21,14 +21,24 @@ export function TravelDashboard({ day }: { day: TripDay }) {
   // available), so it's the only thing that needs the raw event here.
   const minutesUntilNextEvent = nextEvent ? minutesUntil(nextEvent.at, now) : undefined;
 
-  // Avoid showing the same flight/ferry or activity twice if it's already the "next up" card.
-  const otherLegsToday = getTransportLegsForDate(day.date).filter((leg) => {
-    const title = `${leg.carrier}${leg.number ? " " + leg.number : ""} — ${leg.origin} → ${leg.destination}`;
-    return title !== nextEvent?.title;
-  });
-  const otherBookingsToday = (day.confirmedBookings ?? []).filter(
-    (booking) => booking.activityName !== nextEvent?.title
-  );
+  // Everything else today — legs and bookings interleaved in actual time
+  // order — minus whatever is already shown as the Next Up card.
+  const otherEventsToday = [
+    ...getTransportLegsForDate(day.date).map((leg) => ({
+      key: leg.id,
+      title: `${leg.carrier}${leg.number ? " " + leg.number : ""} — ${leg.origin} → ${leg.destination}`,
+      at: parseTimeOnDate(leg.date, leg.departureTime),
+      node: <TransportLegCard leg={leg} />,
+    })),
+    ...(day.confirmedBookings ?? []).map((booking) => ({
+      key: booking.referenceNumber,
+      title: booking.activityName,
+      at: parseTimeOnDate(booking.date, booking.startTime),
+      node: <ConfirmedBookingCard booking={booking} />,
+    })),
+  ]
+    .filter((item) => item.title !== nextEvent?.title)
+    .sort((a, b) => (a.at?.getTime() ?? Infinity) - (b.at?.getTime() ?? Infinity));
 
   return (
     <div className="flex flex-col gap-4">
@@ -48,10 +58,10 @@ export function TravelDashboard({ day }: { day: TripDay }) {
 
       {nextEvent && <NextUpCard event={nextEvent} />}
 
-      {otherLegsToday.length > 0 && (
+      {otherEventsToday.length > 0 && (
         <div className="flex flex-col gap-3">
-          {otherLegsToday.map((leg) => (
-            <TransportLegCard key={leg.id} leg={leg} />
+          {otherEventsToday.map(({ key, node }) => (
+            <div key={key}>{node}</div>
           ))}
         </div>
       )}
@@ -89,14 +99,6 @@ export function TravelDashboard({ day }: { day: TripDay }) {
             </p>
           )}
       </Card>
-
-      {otherBookingsToday.length > 0 && (
-        <div className="flex flex-col gap-3">
-          {otherBookingsToday.map((booking) => (
-            <ConfirmedBookingCard key={booking.referenceNumber} booking={booking} />
-          ))}
-        </div>
-      )}
 
       {day.notes && (
         <Card>

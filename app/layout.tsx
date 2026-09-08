@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
+import { AppChrome } from "@/components/AppChrome";
 import { BottomNav } from "@/components/BottomNav";
 import { Header } from "@/components/Header";
 import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
@@ -40,11 +41,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${playfair.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-cream text-ink">
-        <Header />
+        <AppChrome>
+          <Header />
+        </AppChrome>
         <main className="mx-auto w-full max-w-3xl flex-1 px-4 pb-28 pt-4 md:pb-12">
           {children}
         </main>
-        <BottomNav />
+        <AppChrome>
+          <BottomNav />
+        </AppChrome>
         <ServiceWorkerRegister />
       </body>
     </html>

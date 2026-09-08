@@ -38,7 +38,7 @@ const TRAVEL_SAFETY_MULTIPLIER_BY_KIND: Record<NextEvent["kind"], number> = {
  * leading time out of that pattern; anything else (e.g. "Evening (exact
  * time TBD)") is intentionally left unparsed rather than guessed.
  */
-function parseTimeOnDate(dateIso: string, timeStr: string | undefined): Date | undefined {
+export function parseTimeOnDate(dateIso: string, timeStr: string | undefined): Date | undefined {
   if (!timeStr) return undefined;
   const match = timeStr.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)/i);
   if (!match) return undefined;
