@@ -28,10 +28,10 @@ export const tripDays: TripDay[] = [
     ],
     morningPlan: "Drop off the car at The Parking Spot (CLT) around 10:30 AM before heading to check-in.",
     afternoonPlan:
-      "Long layover at JFK — land at 2:30 PM on AA374, don't leave until 6:30 PM on BA112 (~4 hours). Plan: the Sapphire Lounge by The Club (Chase x Etihad Airways), Terminal 4, Level 4, after security. Made-to-order dining, cocktails, shower suites — a good place to reset before the overnight flight.",
+      "Long layover at JFK — land at 2:30 PM on AA374, don't leave until 6:30 PM on BA112 (~4 hours). First choice: the Sapphire Lounge by The Club (Chase x Etihad Airways), Terminal 4, Level 4, after security — made-to-order dining, cocktails, shower suites. Alternate: the Capital One Lounge, also Terminal 4 after security (Level 3, near the Retail Hall) — dining stations, full bar, coffee bar, private shower suites. Either is a good place to reset before the overnight flight.",
     eveningPlan: "Overnight flight to London, connecting onward to Athens tomorrow.",
     notes:
-      "Sapphire Lounge: open daily 5:00 AM–11:00 PM, though actual hours may not always match what's listed. chase.com/sapphireairportlounge. This is the plan, not a confirmed reservation — lounges like this don't take bookings.",
+      "Sapphire Lounge: open daily 5:00 AM–11:00 PM (hours may not always match what's listed). chase.com/sapphireairportlounge. Capital One Lounge: listed as open 24 hours (same caveat). Neither is a confirmed reservation — lounges like this don't take bookings, so just pick whichever looks better/less crowded when you land.",
   },
   {
     date: "2026-09-11",
