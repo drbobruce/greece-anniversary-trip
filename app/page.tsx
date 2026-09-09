@@ -2,24 +2,33 @@ import Link from "next/link";
 import { Card, SectionLabel } from "@/components/Card";
 import { ChevronRightIcon } from "@/components/icons";
 import { CoverPhoto } from "@/components/CoverPhoto";
+import { LocalTimeBanner } from "@/components/LocalTimeBanner";
 import { TravelDashboard } from "@/components/TravelDashboard";
+import { readSiteConfig } from "@/lib/siteConfig";
 import { formatDateLong, getTodayInfo } from "@/lib/utils";
 
 // "Today" depends on the real-world date, so always render it fresh.
 export const dynamic = "force-dynamic";
 
-export default function TodayPage() {
+export default async function TodayPage() {
   const info = getTodayInfo();
+  const { coverPhotoUrl } = await readSiteConfig();
 
   if (info.status === "during" && info.day) {
-    return <TravelDashboard day={info.day} />;
+    return (
+      <div className="flex flex-col gap-4">
+        <LocalTimeBanner />
+        <TravelDashboard day={info.day} />
+      </div>
+    );
   }
 
   if (info.status === "before" && info.nextDay) {
     return (
       <div className="flex flex-col gap-4">
+        <LocalTimeBanner />
         <Card className="overflow-hidden p-0!">
-          <CoverPhoto />
+          <CoverPhoto src={coverPhotoUrl} />
           <div className="p-6 text-center">
             <p className="text-sm font-semibold uppercase tracking-widest text-aegean">
               Countdown to Greece
@@ -78,8 +87,9 @@ export default function TodayPage() {
   // status === "after"
   return (
     <div className="flex flex-col gap-4">
+      <LocalTimeBanner />
       <Card className="overflow-hidden p-0!">
-        <CoverPhoto />
+        <CoverPhoto src={coverPhotoUrl} />
         <div className="p-6 text-center">
           <p className="text-sm font-semibold uppercase tracking-widest text-aegean">
             Efharisto, Greece

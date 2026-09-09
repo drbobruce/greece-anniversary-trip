@@ -10,13 +10,13 @@ export function LocalTimeBanner({ now = new Date() }: { now?: Date }) {
   const hoursAhead = getUtcOffsetHours(now, GREECE_TZ) - getUtcOffsetHours(now, HOME_TZ);
 
   return (
-    <div className="flex items-center justify-between rounded-2xl bg-sand/50 px-4 py-2.5 text-sm">
+    <div className="flex items-center justify-between rounded-2xl bg-aegean-dark px-4 py-3 text-cream">
       <span>
-        <span className="font-semibold text-ink">🇬🇷 {greeceTime}</span>
-        <span className="mx-2 text-sand-dark">·</span>
-        <span className="text-ink-soft">Charlotte {homeTime}</span>
+        <span className="text-lg font-bold">🇬🇷 {greeceTime}</span>
+        <span className="mx-2 text-cream/40">·</span>
+        <span className="text-sm text-cream/80">Charlotte {homeTime}</span>
       </span>
-      <span className="text-xs font-medium text-ink-soft">{hoursAhead}h ahead</span>
+      <span className="text-xs font-medium text-cream/70">{hoursAhead}h ahead</span>
     </div>
   );
 }

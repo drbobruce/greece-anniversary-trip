@@ -1,10 +1,12 @@
 import Image from "next/image";
 
-export function CoverPhoto({ className = "" }: { className?: string }) {
+const DEFAULT_COVER = "/photos/bo-and-lisa.jpg";
+
+export function CoverPhoto({ src, className = "" }: { src?: string; className?: string }) {
   return (
     <div className={`relative aspect-[4/3] w-full overflow-hidden ${className}`}>
       <Image
-        src="/photos/bo-and-lisa.jpg"
+        src={src || DEFAULT_COVER}
         alt="Bo and Lisa"
         fill
         priority
