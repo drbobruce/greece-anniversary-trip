@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { upload } from "@vercel/blob/client";
 import { CameraIcon } from "./icons";
+import { stripExif } from "@/lib/stripExif";
 
 export function PhotoUploadForm({ onUploaded }: { onUploaded?: () => void }) {
   const [uploading, setUploading] = useState(false);
@@ -14,7 +15,11 @@ export function PhotoUploadForm({ onUploaded }: { onUploaded?: () => void }) {
     setError(null);
 
     try {
-      for (const file of Array.from(files)) {
+      for (const rawFile of Array.from(files)) {
+        // Strip GPS/EXIF metadata before the photo ever leaves the phone —
+        // the original in the Photos app is untouched, only this uploaded
+        // copy is re-encoded without it.
+        const file = await stripExif(rawFile);
         const blob = await upload(`photos/${Date.now()}-${file.name}`, file, {
           access: "public",
           handleUploadUrl: "/api/photos/upload",
