@@ -18,8 +18,13 @@ export function PhotoUploadForm({ onUploaded }: { onUploaded?: () => void }) {
       for (const rawFile of Array.from(files)) {
         // Strip GPS/EXIF metadata before the photo ever leaves the phone —
         // the original in the Photos app is untouched, only this uploaded
-        // copy is re-encoded without it.
-        const file = await stripExif(rawFile);
+        // copy is re-encoded without it. Races against a timeout so a rare
+        // browser stall during processing can't freeze the upload forever;
+        // if it's still running after 12s, upload the original instead.
+        const file = await Promise.race([
+          stripExif(rawFile),
+          new Promise<File>((resolve) => setTimeout(() => resolve(rawFile), 12_000)),
+        ]);
         const blob = await upload(`photos/${Date.now()}-${file.name}`, file, {
           access: "public",
           handleUploadUrl: "/api/photos/upload",
